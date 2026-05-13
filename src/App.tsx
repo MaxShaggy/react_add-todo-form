@@ -4,19 +4,19 @@ import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 import { User, Todo, TodoWithUser } from './types';
 import { TodoList } from './components/TodoList';
-import { CreateTodoForm } from './components/CreateTodoForm/CreateTodoFrom';
+import { CreateTodoForm } from './components/CreateTodoForm';
 
 function prepareTodos(todos: Todo[], users: User[]): TodoWithUser[] {
   return todos.map(todo => ({
     ...todo,
-    user: users.find(item => todo.userId === item.id) ?? null, //null если юзера нет
+    user: users.find(item => todo.userId === item.id) ?? null,
   }));
 }
 
-const preparedTodos = prepareTodos(todosFromServer, usersFromServer);
-
 export const App = () => {
-  const [todos, setTodos] = useState(preparedTodos);
+  const [todos, setTodos] = useState<TodoWithUser[]>(() =>
+    prepareTodos(todosFromServer, usersFromServer)
+  );
 
   function handleAddTodo(title: string, userId: number) {
     const user = usersFromServer.find(item => item.id === userId) || null;
