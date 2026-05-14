@@ -15,7 +15,7 @@ function prepareTodos(todos: Todo[], users: User[]): TodoWithUser[] {
 
 export const App = () => {
   const [todos, setTodos] = useState<TodoWithUser[]>(() =>
-    prepareTodos(todosFromServer, usersFromServer)
+    prepareTodos(todosFromServer, usersFromServer),
   );
 
   function handleAddTodo(title: string, userId: number) {

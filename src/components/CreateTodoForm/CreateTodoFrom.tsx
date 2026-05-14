@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CreateTodoFormProps } from '../../types';
 
 export function CreateTodoForm({ users, onAddTodo }: CreateTodoFormProps) {
   const [title, setTitle] = useState('');
-  const [selectedUserId, setSelectedUserId] = useState(0);
+  const [selectedUserId, setSelectedUserId] = useState('');
   const [titleError, setTitleError] = useState('');
   const [userError, setUserError] = useState('');
 
@@ -19,7 +19,7 @@ export function CreateTodoForm({ users, onAddTodo }: CreateTodoFormProps) {
       setTitleError('');
     }
 
-    if (selectedUserId === 0) {
+    if (!selectedUserId) {
       setUserError('Please choose a user');
       hasError = true;
     } else {
@@ -30,9 +30,10 @@ export function CreateTodoForm({ users, onAddTodo }: CreateTodoFormProps) {
       return;
     }
 
-    onAddTodo(title, selectedUserId);
+    onAddTodo(title.trim(), Number(selectedUserId));
+
     setTitle('');
-    setSelectedUserId(0);
+    setSelectedUserId('');
   }
 
   return (
@@ -57,11 +58,11 @@ export function CreateTodoForm({ users, onAddTodo }: CreateTodoFormProps) {
           data-cy="userSelect"
           value={selectedUserId}
           onChange={event => {
-            setSelectedUserId(Number(event.target.value));
+            setSelectedUserId(event.target.value);
             setUserError('');
           }}
         >
-          <option value="0" disabled>
+          <option value="" disabled>
             Choose a user
           </option>
 
