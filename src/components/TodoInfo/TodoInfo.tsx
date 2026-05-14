@@ -1,9 +1,17 @@
+import cn from 'classnames';
 import { TodoInfoProps } from '../../types';
+import { UserInfo } from '../UserInfo';
 
 export const TodoInfo = ({ todo }: TodoInfoProps) => {
   return (
-    <div className="TodoInfo">
+    <article
+      className={cn('TodoInfo', {
+        'TodoInfo--completed': todo.completed,
+      })}
+    >
       <h2 className="TodoInfo__title">{todo.title}</h2>
-    </div>
+
+      {todo.user && <UserInfo user={todo.user} />}
+    </article>
   );
 };
